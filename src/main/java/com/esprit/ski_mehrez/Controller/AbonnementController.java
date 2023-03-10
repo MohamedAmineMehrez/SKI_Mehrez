@@ -6,6 +6,7 @@ import com.esprit.ski_mehrez.Services.IAbonnementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,5 +40,10 @@ public class AbonnementController {
     public Optional<Abonnement> FindS(@PathVariable Long id)
     {
         return iAbonnementService.retrieveAbonnement(id);
+    }
+    @GetMapping("/d/{datedebut}/{datefin}")
+    public List<Abonnement> findbyDate(@PathVariable LocalDate datedebut,@PathVariable LocalDate datefin)
+    {
+        return iAbonnementService.retrieveSubscriptionsByDates(datedebut,datefin);
     }
 }

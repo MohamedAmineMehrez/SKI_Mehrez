@@ -2,12 +2,16 @@ package com.esprit.ski_mehrez.Services;
 
 import com.esprit.ski_mehrez.Entities.Abonnement;
 import com.esprit.ski_mehrez.Entities.Skieur;
+import com.esprit.ski_mehrez.Entities.TypeAbonnement;
 import com.esprit.ski_mehrez.Reposotory.AbonnementRepostory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
 @Service
 public class AbonnementService implements IAbonnementService{
     @Autowired
@@ -35,5 +39,15 @@ public class AbonnementService implements IAbonnementService{
     @Override
     public void RemoveAbonnement(Long numAbonn) {
         abonnementRepostory.deleteById(numAbonn);
+    }
+
+    @Override
+    public Set<Abonnement> getSubscriptionByType(TypeAbonnement type) {
+        return abonnementRepostory.findByTypeAbon(type);
+    }
+
+    @Override
+    public List<Abonnement> retrieveSubscriptionsByDates(LocalDate startDate, LocalDate endDate) {
+        return abonnementRepostory.findByDateDebutAfterAndAndDateFinBefore(startDate,endDate);
     }
 }

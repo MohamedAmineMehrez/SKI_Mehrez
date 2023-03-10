@@ -3,6 +3,7 @@ package com.esprit.ski_mehrez.Services;
 import com.esprit.ski_mehrez.Entities.Abonnement;
 import com.esprit.ski_mehrez.Entities.Piste;
 import com.esprit.ski_mehrez.Entities.Skieur;
+import com.esprit.ski_mehrez.Entities.TypeAbonnement;
 import com.esprit.ski_mehrez.Reposotory.AbonnementRepostory;
 import com.esprit.ski_mehrez.Reposotory.PisteRepostory;
 import com.esprit.ski_mehrez.Reposotory.SkieurRepostory;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,5 +73,10 @@ public class SkieurIIM implements ISkieurService{
 
             }
             return null;
+    }
+
+   @Override
+    public List<Skieur> retrieveSkiersBySubscriptionType(TypeAbonnement typeAbonnement) {
+     return skieurRepostory.findByAbonnementTypeAbon(typeAbonnement);
     }
 }

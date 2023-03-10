@@ -12,4 +12,6 @@ public interface IMoniteurService {
     Moniteur updateMoniteur (Moniteur moniteur);
     Optional retrieveMoniteur (Long numMoniteur);
     void RemoveMoniteur(Long numMoniteur);
+    Moniteur assignMoniteurTocour(Long numMoniteur, Long numCour);
+
 }

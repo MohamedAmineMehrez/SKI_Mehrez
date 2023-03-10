@@ -1,5 +1,6 @@
 package com.esprit.ski_mehrez.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,5 +23,6 @@ public class Moniteur {
     private String prenomM;
     private LocalDate dateRecru;
     @OneToMany
+    @JsonIgnore
     private List<Cours> cours;
 }
