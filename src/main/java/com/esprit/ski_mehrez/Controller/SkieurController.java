@@ -1,7 +1,6 @@
 package com.esprit.ski_mehrez.Controller;
 
-import com.esprit.ski_mehrez.Entities.Skieur;
-import com.esprit.ski_mehrez.Entities.TypeAbonnement;
+import com.esprit.ski_mehrez.Entities.*;
 import com.esprit.ski_mehrez.Services.ISkieurService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -54,5 +53,10 @@ public class SkieurController  {
     @GetMapping("/a/{typeabon}")
     public List<Skieur> showskieurbytypeabon(@PathVariable TypeAbonnement typeabon){
         return Iskieurservice.retrieveSkiersBySubscriptionType(typeabon);
+    }
+    @GetMapping("/get/{inscriptions_cour_typeCours}/{inscriptions_cour_support}/{pistes_coulour}")
+    public List<Skieur> Getby(@PathVariable TypeCours inscriptions_cour_typeCours,@PathVariable Support inscriptions_cour_support,@PathVariable Coulour pistes_coulour)
+    {
+        return Iskieurservice.FindSkieurbyparamateres(inscriptions_cour_typeCours,inscriptions_cour_support,pistes_coulour);
     }
 }
