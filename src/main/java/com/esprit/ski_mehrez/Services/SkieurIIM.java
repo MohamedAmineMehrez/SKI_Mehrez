@@ -1,17 +1,17 @@
 package com.esprit.ski_mehrez.Services;
 
 import com.esprit.ski_mehrez.Entities.*;
-import com.esprit.ski_mehrez.Reposotory.AbonnementRepostory;
-import com.esprit.ski_mehrez.Reposotory.PisteRepostory;
-import com.esprit.ski_mehrez.Reposotory.SkieurRepostory;
+import com.esprit.ski_mehrez.Reposotory.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +22,9 @@ public class SkieurIIM implements ISkieurService{
     private final PisteRepostory pisteRepository;
 
     private final AbonnementRepostory abonnementRepository;
+    private final CoursRepostory coursRepostory;
+    private final InscriptionRepostory inscriptionRepostory;
+
     @Override
     public List<Skieur> retrieveAllSkieurs() {
         return skieurRepostory.findAll();    }
@@ -81,9 +84,29 @@ public class SkieurIIM implements ISkieurService{
 
     @Override
     public Skieur addSkieurandassigntoCour(Skieur S) {
-        return null;
+       Assert.notNull(S.getAbonnement(),"Abonnement must not be int");
+       Assert.notNull(S.getInscriptions(),"Inscription must not be int");
+       List<Inscription> inscriptions=S.getInscriptions();
+        inscriptions.forEach(inscription -> {
+            Assert.notNull(inscription.getCour().getNumCours(),"cour must be entered");
+            Cours cours=coursRepostory.findById(inscription.getCour().getNumCours()).orElse(null);
+            Assert.notNull(cours,"no courses found with this id");
+            inscription.setCour(cours);
+            //skieurRepostory.saveAndFlush(S);autre facon
+            //inscription.setSkieur(S);
+            //inscriptionRepostory.save(inscription);//taw ki bch test itwali exception handler
+
+
+        });
+        skieurRepostory.save(S); //l'autre facon remove all but the return to change the methode
+        S.getInscriptions().forEach(inscription -> {
+            inscription.setSkieur(S);
+            inscriptionRepostory.save(inscription);
+        });
+       return S;
         //nested json
     }
+    //autrement n3adew liste de cour en url
 
     @Override
     public List<Skieur> FindSkieurbyparamateres(TypeCours inscriptions_cour_typeCours, Support inscriptions_cour_support, Coulour pistes_coulour) {

@@ -59,4 +59,9 @@ public class SkieurController  {
     {
         return Iskieurservice.FindSkieurbyparamateres(inscriptions_cour_typeCours,inscriptions_cour_support,pistes_coulour);
     }
+    @PostMapping("/assigncour")
+    Skieur addskieurAndassignTocourse(@RequestBody Skieur skieur)
+    {
+        return Iskieurservice.addSkieurandassigntoCour(skieur);
+    }
 }

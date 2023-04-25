@@ -26,12 +26,10 @@ public class Skieur {
     private String ville;
 
     @OneToMany(mappedBy = "skieur")
-    @JsonIgnore
     private List<Inscription> inscriptions;
     @ManyToMany
     @JsonIgnore
     private List<Piste> pistes;
     @OneToOne(cascade = CascadeType.REMOVE)
-    @JsonIgnore
     private Abonnement abonnement;
 }
