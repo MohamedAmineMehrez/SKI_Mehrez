@@ -12,4 +12,5 @@ public interface ICoursService {
     Cours updateCour (Cours cours);
     Optional retrieveCour (Long numCour);
     void RemoveCour(Long numCour);
+    public void test();
 }
